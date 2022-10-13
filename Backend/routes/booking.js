@@ -8,6 +8,7 @@ var insertCustomerSql = "Insert into customer values(null,?,?,?,?,?,?,?)";
 var insertBookingSql = "Insert into booking values(null,?,?,?,?,?,?)";
 var deleteCustomerSql = "delete from customer where customer_id =?";
 var deleteBookingSql = "delete from booking where customer_id =?";
+var updateSql = "Update Booking set customer_name=?,age=?, gender=?, email=?, phone=? where customer_id=?";
 var detailSql = "select v.vehicle_no,d.driver_id,d.driver_name,r.fare from vehicle v , driver d , route r where r.start=? and r.end =? and " +
     "v.vehicle_no = d.vehicle_no " +
     "and v.vehicle_no = r.vehicle_no";
@@ -68,6 +69,20 @@ route.post('/insert', (req, res) => {
                     }
                 });
             }
+        }
+    });
+});
+route.patch(`/update`, (req, res) => {
+    var body = req.body;
+    connection.query(updateSql, [body.name, body.age, body.gender, body.email, body.phone, body.id], (err, result) => {
+        if (!err) {
+            if (result.affectedRows > 0) {
+                return res.status(200).json("Updated Customer Info Success!");
+            } else {
+                return res.status(500).json("Something Went wrong");
+            }
+        } else {
+            return res.status(500).json("Some Error Found :: " + err.errno + ":: " + err.sqlMessage);
         }
     });
 });
