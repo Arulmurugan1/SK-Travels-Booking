@@ -1,0 +1,25 @@
+
+.mat-container
+{
+  width: 100%;
+  height: 91vh;
+  border: 1px solid #555;
+  background: none;
+}
+mat-drawer
+{
+  width :20%;
+  background: mintcream;
+}
+mat-drawer-content {
+  padding: 5% 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+mat-tree
+{
+  background: none;
+  padding-left: 1%;
+}

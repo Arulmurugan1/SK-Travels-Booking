@@ -31,6 +31,7 @@ route.post('/', (req, res) => {
 });
 
 route.post('/register', (req, res) => {
+    console.log('API Called');
     let body = req.body;
     if (body.length == 0) {
         return res.status(500).json({ message: "No Information received !" })
@@ -46,7 +47,7 @@ route.post('/register', (req, res) => {
                         }
                     });
                 } else {
-                    return res.status(302).json({ message: "Email already registered !" });
+                    return res.status(302).json({ message: "Account already registered !" });
                 }
             } else {
                 return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.sqlMessage);
