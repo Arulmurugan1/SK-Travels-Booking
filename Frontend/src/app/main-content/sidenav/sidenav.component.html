@@ -1,0 +1,9 @@
+<mat-nav-list>
+    <mat-list-item  *ngFor="let menu of menuItems.getMenuItems()" group="{{menu.state}">
+      <a [routerLink]="['/travel',menu.state]">
+        <mat-icon [color]="menu.color">{{menu.icon}}</mat-icon>
+        <span>{{menu.name}}</span>
+      </a>
+    <mat-divider [inset]="true"></mat-divider>
+    </mat-list-item>
+</mat-nav-list>

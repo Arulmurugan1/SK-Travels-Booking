@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+          <img src="../../assets/booking.jpg" class="clearfix img-fluid" alt="Booking">
+          <div class="card-body">
+              <h2 class="card-title">Total Booking :</h2>
+              <h1 class="card-text text-center">
+                  {{count?.booking}}
+              </h1>
+              <button class="btn btn-lg btn-success w-100" routerLink="../booking">Book Now </button>
+          </div>
+      </div>
+      <div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+          <img src="../../assets/customer.jpg" class="clearfix img-fluid" alt="Customer">
+          <div class="card-body">
+              <h2 class="card-title">Total Customer :</h2>
+              <h1 class="card-text text-center font-monospace">
+                {{count?.customer}}
+              </h1>
+              <button class="btn btn-lg btn-success w-100">View Customers </button>
+          </div>
+      </div>
+      <div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+          <img src="../../assets/volvo.jpg" class="clearfix img-fluid" alt="Transport">
+          <div class="card-body">
+              <h2 class="card-title">Total Transport :</h2>
+              <h1 class="card-text text-center font-monospace">
+                {{count?.transport}}
+              </h1>
+              <button class="btn btn-lg btn-success w-100">View Transport </button>
+          </div>
+      </div>
+<div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+  <img src="../../assets/driver.jpeg" class="clearfix img-fluid" alt="Drivers">
+  <div class="card-body">
+      <h2 class="card-title">Total Driver :</h2>
+      <h1 class="card-text text-center font-monospace">
+        {{count?.driver}}
+      </h1>
+      <button class="btn btn-lg btn-success w-100">View Driver </button>
+  </div>
+</div>
+<div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+  <img src="../../assets/road-210913__480.jpg" class="clearfix img-fluid" alt="Routes">
+  <div class="card-body">
+      <h2 class="card-title">Total Route :</h2>
+      <h1 class="card-text text-center font-monospace">
+        {{count?.route}}
+      </h1>
+      <button class="btn btn-lg btn-success w-100">View Routes </button>
+  </div>
+</div>
+<div class="card col-md-6 col-xl-3 m-2 p-0 w-25 h-25">
+  <img src="../../assets/users.jpg" alt="Users">
+  <div class="card-body">
+      <h2 class="card-title">Total Users :</h2>
+      <h1 class="card-text text-center font-monospace">
+        {{count?.users}}
+      </h1>
+      <button class="btn btn-lg btn-success w-100">View Users </button>
+  </div>
+</div>
+</div>
+</div>
