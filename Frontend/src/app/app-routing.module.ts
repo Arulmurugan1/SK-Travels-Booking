@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MainComponentComponent } from './main-content/main-component/main-component.component';
-import { AuthenticationService } from './services/authentication.service';
 import { RouteActivatorService } from './services/route-activator.service';
 
 const routes: Routes = [

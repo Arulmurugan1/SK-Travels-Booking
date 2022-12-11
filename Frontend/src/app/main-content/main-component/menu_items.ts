@@ -10,7 +10,8 @@ export interface menu{
 
 const menu_items = [
   {state: 'home', name: 'Dashboard', icon: 'dashboard', role: '',color:'primary'},
-  {state: 'booking', name: 'Booking', icon: 'library_books', role: '',color:'primary'},
+  {state: 'booking', name: 'Book Here', icon: 'library_books', role: '', color: 'primary' },
+  {state: '#', name: 'My Booking', icon: 'library_books', role: '',color:'primary'},
   {state: 'customer', name: 'Customer', icon: 'supervised_user_circle', role: '',color:'primary'},
   {state: 'transport', name: 'Transport', icon: 'directions_bus', role: '',color:'primary'},
   {state: 'driver', name: 'Driver', icon: 'nature_people', role: '',color:'primary'},

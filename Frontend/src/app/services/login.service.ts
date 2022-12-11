@@ -35,4 +35,20 @@ export class LoginService {
       headers: new HttpHeaders().set('ContentType', 'application/json')
     });
   }
+  getBoarding(): any {
+    return this.httpClient.get(this.url + '/booking/getBoarding');
+  }
+  getDestination() :any{
+    return this.httpClient.get(this.url + '/booking/getDestination');
+  }
+  getDetails(data:any){
+    return this.httpClient.post(this.url + '/booking/details', data, {
+      headers: new HttpHeaders().set('ContentType', 'application/json')
+    });
+  }
+  BookData(data:any){
+    return this.httpClient.post(this.url + '/booking/insert', data, {
+      headers: new HttpHeaders().set('ContentType', 'application/json')
+    });
+  }
 }

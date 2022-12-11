@@ -1,4 +1,8 @@
-
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 .mat-container
 {
   width: 100%;
@@ -12,9 +16,11 @@ mat-drawer
   background: mintcream;
 }
 mat-drawer-content {
-  padding:2% 0;
+  padding:0;
+  width: 80%;
   position: relative;
   display: flex;
   flex-direction: column;
-  left: 21%;
+  left: 20%;
+  border: 6px double red;
 }

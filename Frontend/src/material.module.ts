@@ -47,7 +47,6 @@ import {CdkMenuModule} from '@angular/cdk/menu';
 import {DialogModule} from '@angular/cdk/dialog';
 import { MenuItems } from './app/main-content/main-component/menu_items';
 
-
 @NgModule({
   exports: [
     A11yModule,

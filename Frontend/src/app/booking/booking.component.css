@@ -1,0 +1,70 @@
+
+body{
+  height: 89.4vh;
+  box-sizing: border-box;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  overflow: hidden;
+
+  background: linear-gradient(
+    105deg,
+    rgba(12,2,5,0.7),
+    rgba(12,2,5,0.7)
+  )
+  ,url('../../assets/booking-bg-img.jpg');
+  background-size: cover;
+  position: center;
+}
+
+.form-content{
+  display: flex;
+  justify-content: space-around;
+}
+
+h2{
+  font-size: 50px;
+}
+
+.myPanelClass{
+  margin-top: 30px !important;
+}
+mat-card{
+  width: 48%;
+  padding: 28px 30px;
+}
+mat-radio-button {
+  margin-left: 16px;
+}
+mat-card-actions{
+  margin: 8px 0px ;
+}
+mat-toolbar{
+  color: green;
+  font-size: 5rem;
+  margin: 1% 0%;
+  background: none;
+  display: flex;
+  justify-content: center;
+}
+mat-form-field{
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}

@@ -19,6 +19,8 @@ import { TokenInterceptor } from './services/token.interceptor';
 import { ChangePasswordComponent } from './main-content/change-password/change-password.component';
 import { ConfirmationComponent } from './main-content/confirmation/confirmation.component';
 
+
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
   textColor: '#FFFFFF',

@@ -1,6 +1,6 @@
 <mat-nav-list>
-    <mat-list-item  *ngFor="let menu of menuItems.getMenuItems()" group="{{menu.state}">
-      <a [routerLink]="['/travel',menu.state]">
+    <mat-list-item  *ngFor="let menu of menuItems.getMenuItems()" group="{{menu.state}" >
+      <a  md-tab-link [routerLink]="['/travel',menu.state]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
         <mat-icon [color]="menu.color">{{menu.icon}}</mat-icon>
         <span>{{menu.name}}</span>
       </a>

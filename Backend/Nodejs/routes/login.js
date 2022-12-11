@@ -20,24 +20,29 @@ route.post('/', (req, res) => {
   } else {
     connection.query(checkSql, [body.id, body.password], (err, results) => {
       if (!err) {
-        if (results.length <= 0) {
+        if (results.length <= 0)
           return res.status(200).json({ message: " User not Found for " + body.id });
-        } else if ((body.id).trim() != (results[0].user_id).trim()) {
+        else if ( (body.id).trim() != (results[0].user_id).trim())
           return res.status(200).json({ message: " User id not correct " + results[0].username });
-        } else if ((body.password).trim() != results[0].password1.trim()) {
+        else if ( (body.password).trim() != results[0].password1.trim() )
           return res.status(200).json({ message: " Password not Correct " + results[0].username });
-        } else if (results[0].status == 'N') {
+        else if (results[0].status == 'N')
+        {
           return res.status(200).json(
             {
               message: " Wait for admin approval " + results[0].username
             });
-        } else if ((body.password).trim() == results[0].password1) {
+        }
+        else if ((body.password).trim() == results[0].password1)
+        {
           const response = {
             username: results[0].username,
             role: results[0].role,
             id : results[0].user_id
           }
+          
           const token = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '8h' })
+
           res.status(200).json(
             {
               token: token,
@@ -45,9 +50,9 @@ route.post('/', (req, res) => {
               userStatus: results[0].status,
             })
         }
-      } else {
-        return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.sqlMessage);
       }
+      else
+        return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.stack);
     });
   }
 });

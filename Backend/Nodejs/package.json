@@ -20,6 +20,7 @@
         "nodemailer": "^6.8.0"
     },
     "devDependencies": {
+        "node-sessionstorage": "^1.0.0",
         "nodemon": "^2.0.20"
     }
 }

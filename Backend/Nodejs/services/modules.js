@@ -10,6 +10,7 @@ var pathName      = date.getMonth()+1 +'/'+date.getDate()+'/';
 var fileName      =  date.getTime()+ '_booking.pdf';
 const pdfPath     = './Pdf/' + pathName+fileName;
 var nodemailer    = require('nodemailer');
+var url           = require('url');
 
 module.exports = {
   express: express,
@@ -21,5 +22,5 @@ module.exports = {
   auth: auth,
   fileName: fileName,
   pdfPath: pdfPath,
-  nodemailer:nodemailer
+  nodemailer: nodemailer,
 }

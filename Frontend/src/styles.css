@@ -1,14 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
-    height: 100%;
-}
-
-body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100%;
 }
-
 body{
   background: url("https://img.freepik.com/premium-vector/green-flow-wavy-lines-green-transparent-wave-background-brochure-website-flyer-design-transparent-smooth-wave_206325-985.jpg") ;
   background-size: 100% 100%;

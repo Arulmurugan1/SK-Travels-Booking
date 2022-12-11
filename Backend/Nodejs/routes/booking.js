@@ -2,12 +2,11 @@ const connection = require('../connection');
 const express = require('express');
 const route = express.Router();
 const auth = require('../services/authentication');
+var modules = require('../services/modules');
 
-
-var customer_id, vehicle, driver, driver_name, fare;
 var bookingSql = "select c.customer_name,b.* from booking b,customer c where b.customer_id = c.customer_id";
 var insertCustomerSql = "Insert into customer values(null,?,?,?,?,?,?,?)";
-var insertBookingSql = "Insert into booking values(null,?,?,?,?,?,?)";
+var insertBookingSql = "Insert into booking values(null,?,?,?,?,?,?,?,'WIP',sysdate())";
 var deleteCustomerSql = "delete from customer where customer_id =?";
 var deleteBookingSql = "delete from booking where customer_id =?";
 var updateSql = "Update Booking set customer_name=?,age=?, gender=?, email=?, phone=? where customer_id=?";
@@ -20,7 +19,8 @@ route.get('/', auth.authenticateToken, (req, res) => {
 });
 
 route.post('/insert', auth.authenticateToken, (req, res) => {
-  return insertBooking(req, res);
+    insertBooking(req, res);
+    generatePdf(req, res);
 });
 route.patch(`/update`, auth.authenticateToken, (req, res) => {
   return updateBooking(req, res);
@@ -29,6 +29,34 @@ route.delete('/delete/:id', auth.authenticateToken, (req, res) => {
   return deleteBooking(req, res);
 });
 
+route.post('/details', auth.authenticateToken, (req, res) => {
+  connection.query(detailSql, [req.body.start, req.body.end], (err, result) => {
+    if (!err) {
+      return res.status(200).json({ result: result[0] });
+    } else {
+      return res.status(500).json({ result: "Something Error Found :: " + err.errno + ":: " + err.sqlMessage });
+    }
+  });
+});
+
+route.get('/getBoarding', auth.authenticateToken, (req, res) => {
+  connection.query('select distinct start from route order by start', (err, results) => {
+    if (!err) {
+      return res.status(200).json({ TotalBoarding: results.length, results: results });
+    } else {
+      return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.sqlMessage);
+    }
+  });
+});
+route.get('/getDestination', auth.authenticateToken, (req, res) => {
+  connection.query('select distinct end from route order by end', (err, results) => {
+    if (!err) {
+      return res.status(200).json({ TotalDestination: results.length, results: results });
+    } else {
+      return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.sqlMessage);
+    }
+  });
+});
 
 function getBooking(req, res) {
   connection.query(bookingSql, (err, results) => {
@@ -45,55 +73,64 @@ function getBooking(req, res) {
 }
 
 
-class insertBooking {
-
-  constructor(req, res) {
-    var body = req.body; //name,start,end,age,gender,email,phone
-    connection.query(detailSql, [body.start, body.end], (err, result) => {
-      if (!err) {
-        if (Object.keys(result).length == 0) {
-          return res.status(500).json("Driver or Vehicle Unavailable ! Please Try Again After few minutes");
-        } else {
-
-          this.driver = result[0].driver_id;
-          this.driver_name = result[0].driver_name;
-          this.vehicle = result[0].vehicle_no;
-          this.fare = result[0].fare;
-
-          connection.query(insertCustomerSql, [body.name, body.start, body.end, body.age, body.gender, body.email, body.phone], (err, result) => {
-            if (!err) {
-              if (result.affectedRows > 0) {
-                this.customer_id = result.insertId;
-                if (this.customer_id > 0) {
-
-                  var info = {
-                    BookingDetails: { Pickup: body.start, Drop: body.end, Vehicle_No: this.vehicle, Driver_Id: this.driver, Driver_Name: this.driver_name, Fare: this.fare, Customer_Id: this.customer_id, booking_no: 0 },
-                    details: [body.start, body.end, this.customer_id, this.vehicle, this.driver, this.fare]
-                  };
-                  connection.query(insertBookingSql, info.details, (err, result) => {
-                    if (!err) {
-                      if (result.affectedRows > 0) {
-                        info.BookingDetails.booking_no = result.insertId;
-                        return res.status(200).json({ message: "Booking Successful ! ", Info: info.BookingDetails });
-                      }
-                    } else {
-                      return res.status(201).json("Booking Error but Customer Added");
-                    }
-                  });
-                }
-              } else {
-                return res.status(200).json(" Some Error occcured at Customer Adding ");
-              }
-            } else {
-              return res.status(500).json("Something Error Found :: " + err.errno + ":: " + err.sqlMessage);
-            }
-          });
-        }
-      }
+function insertBooking(req, res) {
+  for (var body of req.body) {
+    connection.query(insertCustomerSql, [body.name, body.start, body.end, body.age, body.gender, body.email, body.phone], (err, result) => {
+      var customer_id = result.insertId;
+      var info = {
+        BookingDetails: {
+          pickup: body.start,
+          name: body.name,
+          drop: body.end,
+          vehicleNo: body.vehicle,
+          driverId: body.driver,
+          driverName: body.driverName,
+          fare: body.fare,
+          customerId: customer_id,
+          bookingNo: 0
+        },
+        details: [
+          body.start, body.end, customer_id, body.vehicle, body.driver, body.fare, body.id
+        ]
+      };
+      connection.query(insertBookingSql, info.details, (err, result) => {
+        
+      });
     });
   }
 }
 
+function generatePdf(req, res) {
+  if (req) {
+    console.log(req.body);
+    if (modules.fs.existsSync(modules.pdfPath)) {
+
+      res.contentType("application/pdf");
+      modules.fs.createReadStream(modules.pdfPath).pipe(res);
+
+    } else {
+      modules.ejs.renderFile(modules.path.join(__dirname, '', "report.ejs"), { bookings: req.body, Time: new Date().toString() }, (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json("Render issue ");
+        }
+        else {
+          modules.pdf.create(result).toFile(modules.pdfPath, (err, data) => {
+            if (err) {
+              return res.status(500).json("File Create Issue");
+            }
+            else {
+              res.contentType("application/pdf").status(200);
+              modules.fs.createReadStream(modules.pdfPath).pipe(res);
+            }
+          });
+        }
+      });
+    }
+  } else {
+    return res.status(500).json('Pdf Generation Issue')
+  }
+}
 
 function updateBooking(req, res) {
   var body = req.body;
@@ -135,4 +172,6 @@ function deleteBooking(req, res) {
     }
   });
 }
+
+
 module.exports = route;

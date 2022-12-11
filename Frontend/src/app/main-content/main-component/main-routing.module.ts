@@ -12,30 +12,28 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate:[RouteActivatorService],
-    data: {
-      expectedRole: ['Admin', 'Guest']
-    }
   },
   {
     path: 'booking',
-    component:BookingComponent
+    component: BookingComponent,
   },
   {
     path: 'customer',
-    component:CustomerComponent
+    component: CustomerComponent,
   },
   {
     path: 'transport',
-    component:VehicleComponent
+    component: VehicleComponent,
   },
   {
     path: 'driver',
-    component:DriverComponent
+    component: DriverComponent,
+
   },
   {
     path: 'route',
-    component:RoutesComponent
+    component: RoutesComponent,
+
   }
 ];
 
