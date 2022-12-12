@@ -32,7 +32,8 @@
   <table>
         <thead>
           <tr>
-            
+            <th>Your Booking No</th>
+            <th>Your Unique Id</th>
             <th>Name</th>
             <th>Boarding</th>
             <th>Destination</th>
@@ -46,7 +47,8 @@
           <% if (bookings.length > 0 ) { %>
             <% bookings.forEach(  booking => { %>
             <tr>
-              
+              <td align="center"><%=booking.bookingNo%></td>
+              <td align="center"><%=booking.customerId%></td>
               <td><%= booking.name %> </td>
               <td><%= booking.start %> </td>
               <td><%= booking.end %> </td>

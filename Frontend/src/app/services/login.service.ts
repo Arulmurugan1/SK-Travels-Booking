@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -46,9 +47,14 @@ export class LoginService {
       headers: new HttpHeaders().set('ContentType', 'application/json')
     });
   }
-  BookData(data:any){
-    return this.httpClient.post(this.url + '/booking/insert', data, {
-      headers: new HttpHeaders().set('ContentType', 'application/json')
+  BookData(data: any) : Observable<Blob>{
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', responseType: 'blob'
+    });
+
+    return this.httpClient.post<Blob>(this.url + '/booking/insert', data, {
+      headers: headers, responseType: 'blob' as 'json'
     });
   }
 }

@@ -13,14 +13,15 @@ var updateSql = "Update Booking set customer_name=?,age=?, gender=?, email=?, ph
 var detailSql = "select v.vehicle_no,d.driver_id,d.driver_name,r.fare from vehicle v , driver d , route r where r.start=? and r.end =? and " +
   "v.vehicle_no = d.vehicle_no " +
   "and v.vehicle_no = r.vehicle_no";
+let i = 1;
+let info = [];
 
 route.get('/', auth.authenticateToken, (req, res) => {
   return getBooking(req, res);
 });
 
 route.post('/insert', auth.authenticateToken, (req, res) => {
-    insertBooking(req, res);
-    generatePdf(req, res);
+    return insertBooking(req,res);
 });
 route.patch(`/update`, auth.authenticateToken, (req, res) => {
   return updateBooking(req, res);
@@ -77,45 +78,48 @@ function insertBooking(req, res) {
   for (var body of req.body) {
     connection.query(insertCustomerSql, [body.name, body.start, body.end, body.age, body.gender, body.email, body.phone], (err, result) => {
       var customer_id = result.insertId;
-      var info = {
-        BookingDetails: {
-          pickup: body.start,
-          name: body.name,
-          drop: body.end,
-          vehicleNo: body.vehicle,
-          driverId: body.driver,
-          driverName: body.driverName,
-          fare: body.fare,
-          customerId: customer_id,
-          bookingNo: 0
-        },
-        details: [
-          body.start, body.end, customer_id, body.vehicle, body.driver, body.fare, body.id
-        ]
-      };
-      connection.query(insertBookingSql, info.details, (err, result) => {
-        
+      var details = [
+        body.start, body.end, customer_id, body.vehicle, body.driver, body.fare, body.id
+      ];
+      connection.query(insertBookingSql, details, (err, result) => {
+        if (!result.insertId) {
+          return res.status(500).json('Insert Id Generation Issue')
+        }
+           info[i-1]= {
+              start: body.start,
+              name: body.name,
+              end: body.end,
+              vehicle: body.vehicle,
+              driver: body.driver,
+              driverName: body.driverName,
+              fare: body.fare,
+              customerId: customer_id,
+              bookingNo: result.insertId
+            }
+        if (i++ == req.body.length) {
+          generatePdf(req, res, info);
+        }
       });
     });
   }
 }
 
-function generatePdf(req, res) {
-  if (req) {
-    console.log(req.body);
+function generatePdf(req, res,result) {
+  if (req && result) {
+    
     if (modules.fs.existsSync(modules.pdfPath)) {
 
       res.contentType("application/pdf");
       modules.fs.createReadStream(modules.pdfPath).pipe(res);
 
     } else {
-      modules.ejs.renderFile(modules.path.join(__dirname, '', "report.ejs"), { bookings: req.body, Time: new Date().toString() }, (err, result) => {
+      modules.ejs.renderFile(modules.path.join(__dirname, '', "report.ejs"), { bookings: result, Time: new Date().toString() }, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json("Render issue ");
         }
         else {
-          modules.pdf.create(result).toFile(modules.pdfPath, (err, data) => {
+          modules.pdf.create(results).toFile(modules.pdfPath, (err, data) => {
             if (err) {
               return res.status(500).json("File Create Issue");
             }
@@ -127,6 +131,7 @@ function generatePdf(req, res) {
         }
       });
     }
+
   } else {
     return res.status(500).json('Pdf Generation Issue')
   }

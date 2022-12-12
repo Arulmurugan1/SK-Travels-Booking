@@ -95,7 +95,8 @@ export class BookingComponent implements OnInit {
   }
 
   add() {
-    var data            = this.bookingForm.value;
+    var data = this.bookingForm.value;
+    data['date']        = data['date'].toLocaleDateString();
     data['fare']        = this.fare;
     data['driver']      = this.driver;
     data['driverName']  = this.driverName;
@@ -121,11 +122,22 @@ export class BookingComponent implements OnInit {
     if (this.tableData.length > 0)
     {
       this.service.BookData(this.tableData).subscribe({
-        next: (response: any) => {
-          saveAs(response, 'BookingDetails.pdf');
+        next: (data: Blob) => {
+          var file = new Blob([data], { type: 'application/pdf' })
+          var fileURL = URL.createObjectURL(file);
+
+          this.tableData =[];
+
+          window.open(fileURL);
+          var a         = document.createElement('a');
+          a.href        = fileURL;
+          a.target      = '_blank';
+          a.download    = new Date().getTime()+'_booking.pdf';
+          document.body.appendChild(a);
+          a.click();
         },
         error: (res) => {
-          console.log(res);
+          console.log('response ' + Object.keys(res));
         }
       });
     }

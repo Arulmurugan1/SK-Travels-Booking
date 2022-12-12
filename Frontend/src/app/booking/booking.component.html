@@ -1,6 +1,6 @@
 <body>
   <mat-toolbar>
-    <h2><em>Book Here </em>!</h2>
+    <h2><strong>Book Here </strong>!</h2>
   </mat-toolbar>
   <div class="form-content">
     <mat-card class="mat-typography">
@@ -34,7 +34,7 @@
                 <span *ngIf="bookingForm.controls.start.errors.pattern">
                   This field is Invalid
                 </span>
-                <span *ngIf="bookingForm.value['start'] === bookingForm.value['end']">
+                <span *ngIf="bookingForm.value['start'] !='' && bookingForm.value['end'] && bookingForm.value['start'] === bookingForm.value['end']">
                   Boarding & Destination Cannot be Same
                 </span>
               </mat-error>
@@ -204,22 +204,26 @@
             </mat-form-field>
           </div>
           <div class="col col-md-6 px-2">
-            <mat-form-field appearance="outline">
-              <mat-label>Driver Id</mat-label>
-              <input matInput formControlName="driver" [value]="driver+'-'+driverName" readonly />
-            </mat-form-field>
-          </div>
-           <div class="col col-md-6 mx-auto px-2">
-            <mat-form-field appearance="outline">
-              <mat-label>Fare</mat-label>
-              <input
-                matInput
-                formControlName="fare"
-                type="number"
-                [value]="fare"
-                readonly
-              />
-            </mat-form-field>
+            <div class="row">
+              <div class="col col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Driver Id</mat-label>
+                  <input matInput formControlName="driver" [value]="driver+'-'+driverName" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Fare</mat-label>
+                  <input
+                    matInput
+                    formControlName="fare"
+                    type="number"
+                    [value]="fare"
+                    readonly
+                  />
+                </mat-form-field>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -274,6 +278,7 @@
               mat-flat-button
               color="primary"
               (click)="BookData()"
+              [disabled]="!(tableData.length > 0)"
             >
               Book Now
             </button>

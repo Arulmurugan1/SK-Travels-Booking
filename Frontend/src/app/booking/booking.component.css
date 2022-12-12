@@ -30,6 +30,8 @@ h2{
 mat-card{
   width: 48%;
   padding: 28px 30px;
+  height: 75vh;
+  overflow-y: auto;
 }
 mat-radio-button {
   margin-left: 16px;
