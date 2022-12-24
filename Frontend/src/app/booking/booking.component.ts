@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
-import { saveAs } from 'file-saver';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
@@ -14,7 +13,8 @@ export class BookingComponent implements OnInit {
   i = 0;
   bookingForm: any = FormGroup;
   from: any;to: any;
-  details: any; driver: any; driverName: any; vehicle: any; fare:any;
+  details: any; driver: any; driverName: any; vehicle: any; fare: any;
+  isLinear = false;
 
   constructor(private formBuilder: FormBuilder, private service: LoginService,
   private ngxService:NgxUiLoaderService) {
@@ -121,12 +121,15 @@ export class BookingComponent implements OnInit {
 
     if (this.tableData.length > 0)
     {
+      this.ngxService.start();
       this.service.BookData(this.tableData).subscribe({
         next: (data: Blob) => {
           var file = new Blob([data], { type: 'application/pdf' })
           var fileURL = URL.createObjectURL(file);
 
-          this.tableData =[];
+          this.tableData = [];
+
+          this.ngxService.stop();
 
           window.open(fileURL);
           var a         = document.createElement('a');

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
   <span>{{title}}</span>
   <span class="space-provider"></span>
   <button class="btn btn-success mx-1" (click)="callSignIn()">
@@ -7,4 +7,22 @@
   <button class="btn btn-danger mx-1" (click)="callSignUp()">
     Sign Up
   </button>
-</mat-toolbar>
+</mat-toolbar> -->
+
+<div class="content">
+  <video autoplay loop muted>
+    <source src="../../assets/beach-bg-login.mp4" type="video/mp4">
+  </video>
+<nav>
+  <img src="../../assets/logo-login.jpg" alt="Login Image" class="clearfix">
+  <ul>
+    <li><a (click)="callSignIn()">Sign In</a></li>
+    <li><a (click)="callSignUp()">Sign Up</a></li>
+    <li><a href="#">Forgot Password?</a></li>
+  </ul>
+</nav>
+<div class="center-content">
+  <h1>Amazing</h1>
+  <a href="#">Explore</a>
+</div>
+</div>

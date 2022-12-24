@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   constructor(private dialog:MatDialog) { }
 
   ngOnInit(): void {
-
   }
 
   callSignUp() {
