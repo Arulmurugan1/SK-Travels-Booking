@@ -49,8 +49,8 @@ route.get('/getBoarding', auth.authenticateToken, (req, res) => {
     }
   });
 });
-route.get('/getDestination', auth.authenticateToken, (req, res) => {
-  connection.query('select distinct end from route order by end', (err, results) => {
+route.get('/getDestination/:start', auth.authenticateToken, (req, res) => {
+  connection.query("select distinct end from route where start ='"+req.params.start+"' order by end", (err, results) => {
     if (!err) {
       return res.status(200).json({ TotalDestination: results.length, results: results });
     } else {

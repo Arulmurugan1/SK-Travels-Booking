@@ -22,5 +22,4 @@ mat-drawer-content {
   display: flex;
   flex-direction: column;
   left: 20%;
-  border: 6px double red;
 }

@@ -12,9 +12,9 @@ export class BookingComponent implements OnInit {
   tableData: any;
   i = 0;
   bookingForm: any = FormGroup;
-  from: any;to: any;
+  from: any; to: any;
   details: any; driver: any; driverName: any; vehicle: any; fare: any;
-  isLinear = false;
+  isLinear = true; // For Disable Confirm Booking icon
 
   constructor(private formBuilder: FormBuilder, private service: LoginService,
   private ngxService:NgxUiLoaderService) {
@@ -26,7 +26,7 @@ export class BookingComponent implements OnInit {
       end: ['', [Validators.required]],
       age: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.required,Validators.maxLength(10)]],
       date: ['', [Validators.required]],
       name: ['', [Validators.required]],
       gender: ['', [Validators.required]],
@@ -79,19 +79,26 @@ export class BookingComponent implements OnInit {
         console.log('completed home data');
       }
     });
-    this.to = this.service.getDestination().subscribe({
-      next: (response: any) => {
-        console.log('response' + response);
-        this.to = response;
-      },
-      error: (err: any) => {
-        console.log('response err' + err);
-      },
-      complete: () => {
-        console.log('completed home data');
-      }
-    });
 
+
+
+  }
+
+  getDestination() {
+    if (this.bookingForm.value['start'] != '')
+    {
+      this.to = this.service.getDestination(this.bookingForm.value['start']).subscribe({
+        next: (response: any) => {
+          this.to = response?.results;
+        },
+        error: (err: any) => {
+          console.log('response err' + err);
+        },
+        complete: () => {
+          console.log('completed home data');
+        }
+      });
+    }
   }
 
   add() {
@@ -105,7 +112,7 @@ export class BookingComponent implements OnInit {
 
     this.tableData.push(data);
     this.i++;
-
+    this.isLinear = false;
     console.log(this.tableData);
     this.bookingForm.reset();
   }

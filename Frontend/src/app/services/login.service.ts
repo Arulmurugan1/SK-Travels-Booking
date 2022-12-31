@@ -39,8 +39,8 @@ export class LoginService {
   getBoarding(): any {
     return this.httpClient.get(this.url + '/booking/getBoarding');
   }
-  getDestination() :any{
-    return this.httpClient.get(this.url + '/booking/getDestination');
+  getDestination(start: string): any{
+    return this.httpClient.get(this.url + '/booking/getDestination/'+start);
   }
   getDetails(data:any){
     return this.httpClient.post(this.url + '/booking/details', data, {
