@@ -24,12 +24,14 @@ export class RouteActivatorService {
     if (token) {
       try {
         payload = jwt_decode(token);
+
       } catch (err) {
         localStorage.clear();
         this.router.navigate(['/']);
       }
 
-      localStorage.setItem('userId', payload.id);
+      for (var name in payload)
+        localStorage.setItem(name, payload[name]);
 
       let roleMatched = false;
 

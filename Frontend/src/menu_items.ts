@@ -4,14 +4,14 @@ export interface menu{
   name: String,
   state: String,
   icon: String,
-  role: String,
+  role: String | null,
   color : String
 }
 
 const menu_items = [
   {state: 'home', name: 'Dashboard', icon: 'dashboard', role: '',color:'primary'},
   {state: 'booking', name: 'Book Here', icon: 'library_books', role: '', color: 'primary' },
-  // {state: '#', name: 'My Booking', icon: 'library_books', role: '',color:'primary'},
+  {state: 'myBooking', name: 'My Booking', icon: 'library_books', role: '',color:'primary'},
   // {state: 'customer', name: 'Customer', icon: 'supervised_user_circle', role: '',color:'primary'},
   // {state: 'transport', name: 'Transport', icon: 'directions_bus', role: '',color:'primary'},
   // {state: 'driver', name: 'Driver', icon: 'nature_people', role: '',color:'primary'},

@@ -6,7 +6,7 @@ var auth = require('../services/authentication');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-var checkSql = "select * from login_info where user_id=?";
+var checkSql = "select user_id, username, password1, gender, role, altered_user, create_time, date_format(last_login ,'%W %e %M %Y %r') \"last_login\", status, dob from login_info where user_id=?";
 var insertSql = " Insert into login_info values (?,?,?,' ',' ',' ','Guest',?,current_timestamp,current_timestamp,'N')";
 var updateStatus = 'update login_info set status = ? where user_id = ? ';
 var changePassword = 'update login_info set password1=? where user_id = ? '
@@ -38,7 +38,9 @@ route.post('/', (req, res) => {
           const response = {
             username: results[0].username,
             role: results[0].role,
-            id : results[0].user_id
+            id: results[0].user_id,
+            userStatus: results[0].status,
+            last_login: results[0].last_login,
           }
           
           const token = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '8h' })
@@ -47,7 +49,6 @@ route.post('/', (req, res) => {
             {
               token: token,
               message: " Login Successful " + results[0].username,
-              userStatus: results[0].status,
             })
         }
       }

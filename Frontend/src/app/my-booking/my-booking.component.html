@@ -1,0 +1,59 @@
+<div class="text-center m-2">
+    <h2> My Bookings !</h2>
+</div>
+
+<div class="m-2 p-2">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="Boarding">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Boarding">
+      Boarding
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.Boarding}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Destination">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Destination">
+      Destination
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.Destination}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Transport No">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Transport No">
+      Transport No
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.TransportNo}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Fare">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Fare">
+      Fare
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.Fare}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status">
+      Status
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Booking Time">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Booking Time">
+      Booking Time
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.BookingTime}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[9, 15, 25]"
+    showFirstLastButtons
+    aria-label="Select page of booking table">
+</mat-paginator>
+</div>

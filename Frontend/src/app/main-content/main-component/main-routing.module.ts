@@ -4,8 +4,8 @@ import { BookingComponent } from 'src/app/booking/booking.component';
 import { CustomerComponent } from 'src/app/customer/customer.component';
 import { DriverComponent } from 'src/app/driver/driver.component';
 import { HomeComponent } from 'src/app/home/home.component';
+import { MyBookingComponent } from 'src/app/my-booking/my-booking.component';
 import { RoutesComponent } from 'src/app/routes/routes.component';
-import { RouteActivatorService } from 'src/app/services/route-activator.service';
 import { VehicleComponent } from 'src/app/vehicle/vehicle.component';
 
 const routes: Routes = [
@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'route',
     component: RoutesComponent,
 
+  },
+  {
+    path: 'myBooking',
+    component:MyBookingComponent
   }
 ];
 

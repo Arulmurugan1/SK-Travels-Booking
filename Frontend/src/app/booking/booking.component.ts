@@ -11,10 +11,12 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class BookingComponent implements OnInit {
   tableData: any;
   i = 0;
+  genderCheck: boolean = true;
   bookingForm: any = FormGroup;
   from: any; to: any;
   details: any; driver: any; driverName: any; vehicle: any; fare: any;
   isLinear = true; // For Disable Confirm Booking icon
+  role = localStorage.getItem('role');
 
   constructor(private formBuilder: FormBuilder, private service: LoginService,
   private ngxService:NgxUiLoaderService) {

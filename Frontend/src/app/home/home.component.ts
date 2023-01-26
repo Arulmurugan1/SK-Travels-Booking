@@ -12,6 +12,7 @@ import { LoginService } from '../services/login.service';
 export class HomeComponent implements AfterViewInit {
   title = environment.title;
   count: any;
+  role = localStorage.getItem('role');
   constructor(
     private homeData : LoginService) {
     this.getData();

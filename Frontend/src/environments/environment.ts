@@ -5,7 +5,7 @@ export const environment = {
   sideNavMode : 'over',
   backDrop :true,
   title: 'SK Travels',
-  loggedIn:false,
+  loggedIn: false,
 };
 
 /*

@@ -13,6 +13,8 @@ var updateSql = "Update Booking set customer_name=?,age=?, gender=?, email=?, ph
 var detailSql = "select v.vehicle_no,d.driver_id,d.driver_name,r.fare from vehicle v , driver d , route r where r.start=? and r.end =? and " +
   "v.vehicle_no = d.vehicle_no " +
   "and v.vehicle_no = r.vehicle_no";
+var myBooking = " SELECT PICKUP_FROM \"Boarding\",DROP_AT \"Destination\" , VEHICLE_NO \"TransportNo\" , Fare , Status , date_format(booking_time,'%W %M %e %Y %r ') \"BookingTime\" FROM BOOKING "
+  + " WHERE BOOKED_bY = ? " ;
 let i = 1;
 let info = [];
 
@@ -28,6 +30,17 @@ route.patch(`/update`, auth.authenticateToken, (req, res) => {
 });
 route.delete('/delete/:id', auth.authenticateToken, (req, res) => {
   return deleteBooking(req, res);
+});
+
+route.post('/MyBooking', auth.authenticateToken, (req, res) => {
+  console.log(req.headers);
+  connection.query(myBooking, [req.headers.userid], (err, result) => {
+    if (!err) {
+      return res.status(200).json({ result: result });
+    } else {
+      return res.status(500).json({ result: "Something Error Found :: " + err.errno + ":: " + err.sqlMessage });
+    }
+  });
 });
 
 route.post('/details', auth.authenticateToken, (req, res) => {

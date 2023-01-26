@@ -28,7 +28,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   pbColor: "red",
   bgsColor: "red",
   fgsColor:"red",
-  fgsType: SPINNER.squareJellyBox,
+  fgsType: SPINNER.rotatingPlane,
   fgsSize: 100,
   pbDirection: PB_DIRECTION.leftToRight,
   pbThickness:5

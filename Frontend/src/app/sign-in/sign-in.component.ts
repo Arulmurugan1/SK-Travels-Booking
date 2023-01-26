@@ -44,11 +44,7 @@ export class SignInComponent implements OnInit {
         next: (response: any) => {
           this.ngxService.stop();
           this.dialogRef.close();
-
-          console.log('response ' + Object.keys(response));
-
           this.responseMessage = response.message;
-
           if (this.responseMessage)
             this.snackbar.openSnackbar(this.responseMessage, "");
           else
@@ -56,11 +52,6 @@ export class SignInComponent implements OnInit {
 
           if (response.token)
             localStorage.setItem('token', response.token);
-
-          console.log('token ' + response.token);
-          localStorage.setItem('userStatus', response.userStatus);
-
-          console.log('token ' + response.userStatus);
           this.router.navigate(['/travel']);
         },
         error: (response: any) => {

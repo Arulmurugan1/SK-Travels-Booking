@@ -7,7 +7,7 @@
               <h1 class="card-text text-center">
                   {{count?.booking}}
               </h1>
-              <button class="btn btn-lg btn-success w-100" routerLink="../booking">Book Now </button>
+              <button class="btn btn-lg btn-success w-100"  routerLink="../booking">Book Now </button>
           </div>
       </div>
       <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4">
@@ -17,7 +17,7 @@
               <h1 class="card-text text-center font-monospace">
                 {{count?.customer}}
               </h1>
-              <button class="btn btn-lg btn-success w-100" routerLink="../customer">View Customers </button>
+              <button class="btn btn-lg btn-success w-100" routerLink="../customer" [disabled]="role !== 'Admin'">View Customers </button>
           </div>
       </div>
       <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4">
@@ -28,7 +28,7 @@
               <h1 class="card-text text-center font-monospace">
                 {{count?.transport}}
               </h1>
-              <button class="btn btn-lg btn-success w-100" routerLink="../transport">View Transport </button>
+              <button class="btn btn-lg btn-success w-100" routerLink="../transport" [disabled]="role !== 'Admin'">View Transport </button>
           </div>
       </div>
 <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4">
@@ -39,7 +39,7 @@
       <h1 class="card-text text-center font-monospace">
         {{count?.driver}}
       </h1>
-      <button class="btn btn-lg btn-success w-100">View Driver </button>
+      <button class="btn btn-lg btn-success w-100" [disabled]="role !== 'Admin'">View Driver </button>
   </div>
 </div>
 <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4">
@@ -49,7 +49,7 @@
       <h1 class="card-text text-center font-monospace">
         {{count?.route}}
       </h1>
-      <button class="btn btn-lg btn-success w-100" routerLink="../driver">View Routes </button>
+      <button class="btn btn-lg btn-success w-100" routerLink="../driver" [disabled]="role !== 'Admin'">View Routes </button>
   </div>
 </div>
 <div class="card col-sm-6 col-md-6 col-lg-6 col-xl-4">
@@ -59,7 +59,7 @@
       <h1 class="card-text text-center font-monospace">
         {{count?.users}}
       </h1>
-      <button class="btn btn-lg btn-success w-100">View Users </button>
+      <button class="btn btn-lg btn-success w-100" [disabled]="role !== 'Admin'">View Users </button>
   </div>
 </div>
 </div>
