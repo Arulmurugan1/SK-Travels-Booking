@@ -14,10 +14,12 @@ export class HomeComponent implements AfterViewInit {
   count: any;
   role = localStorage.getItem('role');
   constructor(
-    private homeData : LoginService) {
+    private homeData : LoginService,private service:NgxUiLoaderService) {
     this.getData();
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.service.start();
+  }
 
   getData(){
     this.homeData.getHomeData().subscribe({
@@ -29,7 +31,7 @@ export class HomeComponent implements AfterViewInit {
         console.log('response err'+err);
       },
       complete: () => {
-        console.log('completed home data');
+        this.service.stop();
       }
     })
   }

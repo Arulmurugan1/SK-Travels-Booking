@@ -37,7 +37,7 @@
         <mat-label>
           Password
         </mat-label>
-        <input matInput formControlName="password" required>
+        <input matInput type="password" formControlName="password" required>
         <mat-error *ngIf="signUpForm.controls.password.touched && signUpForm.controls.password.invalid">
           <span *ngIf="signUpForm.controls.password.errors.required">
             This field is mandatory

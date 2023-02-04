@@ -2,23 +2,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../environments/environment';
+import { responseType,myBookingTable, UserTable } from '../Interfaces/Response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
+
   url = environment.baseUrl;
 
   userId = localStorage.getItem('id');
 
-  httpHeaders = new HttpHeaders();
-
   HeaderJSonType = {
-    headers: this.httpHeaders.set('ContentType', "application/json").set('userid', this.userId + "")
-    .set('role',localStorage.getItem('role')+"")
-  };
-  constructor(private httpClient: HttpClient) { }
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  }
+
+  constructor(private httpClient: HttpClient) {
+    console.log(this.HeaderJSonType.headers);
+   }
 
 
 
@@ -49,10 +53,10 @@ export class LoginService {
   getDetails(data:any){
     return this.httpClient.post(this.url + '/booking/details', data, this.HeaderJSonType );
   }
-  BookData(data: any) : Observable<Blob>{
+  BookData(data: any,fileName:string) : Observable<Blob>{
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', responseType: 'blob'
+      'Content-Type': 'application/json', responseType: 'blob',filename:fileName
     });
 
     return this.httpClient.post<Blob>(this.url + '/booking/insert', data, {
@@ -62,6 +66,23 @@ export class LoginService {
 
   getBookingData():any
   {
-    return this.httpClient.post(this.url + '/booking/MyBooking', { 'userId': this.userId },this.HeaderJSonType);
+    return this.httpClient.post<myBookingTable>(this.url + '/booking/MyBooking',this.HeaderJSonType);
+  }
+  getUserData():any
+  {
+    return this.httpClient.get<UserTable>(this.url + '/login/getDetails');
+  }
+  updateStatus(data : any): any
+  {
+    return this.httpClient.post<responseType>(this.url + "/login/status",data,this.HeaderJSonType);
+  }
+  getPdfData(url: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', responseType: 'blob',filename:url
+    });
+
+    return this.httpClient.post<Blob>(this.url + '/booking/getPdf',{}, {
+      headers: headers, responseType: 'blob' as 'json'
+    });
   }
 }

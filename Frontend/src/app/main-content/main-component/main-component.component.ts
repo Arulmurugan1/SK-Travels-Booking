@@ -13,6 +13,7 @@ import { ConfirmationComponent } from '../confirmation/confirmation.component';
 export class MainComponentComponent implements OnInit {
 
   title = environment.title;
+  userName = localStorage.getItem('username');
   constructor(private router:Router,private dialog:MatDialog) { }
 
   ngOnInit(): void {}

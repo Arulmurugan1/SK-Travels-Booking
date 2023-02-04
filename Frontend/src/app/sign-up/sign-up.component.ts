@@ -44,21 +44,24 @@ export class SignUpComponent implements OnInit {
         id: formData.id,
         password: formData.password,
       }
-        this.loginServices.signUp(data).subscribe((response: any) => {
+    this.loginServices.signUp(data).subscribe({
+      next: (response: any) => {
         this.ngxService.stop();
         this.dialogRef.close();
         this.responseMessage = response?.message;
         this.snackbar.openSnackbar(this.responseMessage, "");
-      }, (error: { error: { message: any; }; }) => {
+      },
+      error: (error: any) => {
         this.ngxService.stop();
-        if (error.error?.message) {
+        if (error?.message) {
           this.responseMessage = error.error?.message;
         }
         else {
           this.responseMessage = Constant.SOMETHING_WRONG;
         }
         this.snackbar.openSnackbar(this.responseMessage, Constant.ERROR)
-      })
+      },
+    });
     }
 
 }

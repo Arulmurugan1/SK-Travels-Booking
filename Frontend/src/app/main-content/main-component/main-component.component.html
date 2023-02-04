@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
+  <div>
   <button mat-icon-button>
     <mat-icon (click)="drawer.toggle()">menu icon</mat-icon>
   </button>
   <span class="ml-lg-3">{{title}}</span>
-  <span class="space-provider"></span>
-  <button mat-icon-button matTooltip="Sign Out or Change your Password"
+  </div>
+  <div>
+      <mat-icon color="primary">supervised_user_circle</mat-icon><b class="text-warning">{{userName}}</b>
+  <button class="mr-2" mat-icon-button matTooltip="Sign Out or Change your Password"
       matTooltipPosition="before"
        [matMenuTriggerFor]="menu">
     <mat-icon>open_in_new</mat-icon>
   </button>
+</div>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="changePassword()">
       <mat-icon color="primary">supervised_user_circle</mat-icon>Change Password
@@ -18,8 +22,8 @@
     </button>
   </mat-menu>
 </mat-toolbar>
-<mat-drawer-container class="mat-container" [hasBackdrop]="true">
-  <mat-drawer #drawer mode="over">
+<mat-drawer-container class="mat-container" [hasBackdrop]="false">
+  <mat-drawer #drawer mode="over" opened>
       <app-sidenav></app-sidenav>
   </mat-drawer>
   <mat-drawer-content>

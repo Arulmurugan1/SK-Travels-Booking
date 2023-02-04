@@ -6,6 +6,7 @@ import { DriverComponent } from 'src/app/driver/driver.component';
 import { HomeComponent } from 'src/app/home/home.component';
 import { MyBookingComponent } from 'src/app/my-booking/my-booking.component';
 import { RoutesComponent } from 'src/app/routes/routes.component';
+import { UsersComponent } from 'src/app/users/users.component';
 import { VehicleComponent } from 'src/app/vehicle/vehicle.component';
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'myBooking',
     component:MyBookingComponent
+  },
+  {
+    path: 'userDetails',
+    component:UsersComponent
   }
 ];
 

@@ -22,16 +22,34 @@ import { ConfirmationComponent } from './main-content/confirmation/confirmation.
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  text: 'Loading...',
-  textColor: '#FFFFFF',
-  textPosition: "center-center",
-  pbColor: "red",
-  bgsColor: "red",
-  fgsColor:"red",
-  fgsType: SPINNER.rotatingPlane,
-  fgsSize: 100,
-  pbDirection: PB_DIRECTION.leftToRight,
-  pbThickness:5
+  "text": 'Loading...',
+  "textColor": '#FFFFFF',
+  "textPosition": "center-center",
+  "pbColor": "red",
+  "fgsColor":"red",
+  "fgsType": SPINNER.squareJellyBox,
+  "fgsSize": 100,
+  "pbDirection": PB_DIRECTION.leftToRight,
+  "pbThickness": 5,
+  "bgsColor": "blue",
+  "bgsOpacity": 0.5,
+  "bgsPosition": "center-center",
+  "bgsSize": 60,
+  "bgsType": SPINNER.cubeGrid,
+  "blur": 0,
+  "delay": 0,
+  "fastFadeOut": true,
+  "fgsPosition": "center-center",
+  "gap": 24,
+  "logoPosition": "center-center",
+  "logoSize": 60,
+  "logoUrl": "",
+  "masterLoaderId": "master",
+  "overlayBorderRadius": "0",
+  "overlayColor": "rgba(40, 40, 40, 0.8)",
+  "hasProgressBar": true,
+  "maxTime": -1,
+  "minTime": 300
 }
 @NgModule({
   declarations: [
@@ -40,7 +58,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SignUpComponent,
     SignInComponent,
     ChangePasswordComponent,
-    ConfirmationComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

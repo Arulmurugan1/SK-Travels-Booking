@@ -1,0 +1,74 @@
+<div class="text-center m-3 p-2">
+  <h1>Our Customers !</h1>
+</div>
+
+<div class="m-3 p-3">
+<table mat-table [dataSource]="data" matSort (matSortChange)="applySorting($event)" class="mat-elevation-z8">
+  <ng-container matColumnDef="User Id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By User Id">
+      User Id
+    </th>
+    <td mat-cell *matCellDef="let element" >{{element.user_id}}</td>
+  </ng-container>
+  <ng-container matColumnDef="User Name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By User Name">
+      User Name
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.username}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Password">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Password">
+      Password
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.password1}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Gender">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Gender">
+      Gender
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.username}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Role">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Role">
+      Role
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.role}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Altered User">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Altered User">
+      Altered User
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.altered_user}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Create Time">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Create Time">
+      Create Time
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.create_time}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Last Login">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Last Login">
+      Last Login
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.last_login}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Date Of Birth">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Date Of Birth">
+      Date Of Birth
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.dob}}</td>
+  </ng-container>
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort By Status">
+      Status
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-slide-toggle *ngIf="element.status.trim().length > 0" color="warn" (change)="action($event.checked,element.user_id)"
+       matTooltip="Activate or Deactivate Customer" [checked]="element.status === 'Y'"></mat-slide-toggle>
+      </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="Columns"></tr>
+  <tr mat-row *matRowDef="let row;columns : Columns"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[9,15,20]" showFirstLastButtons aria-label="true"></mat-paginator>
+</div>

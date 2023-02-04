@@ -8,9 +8,17 @@ import { MenuItems } from '../../../menu_items';
 })
 export class SidenavComponent implements OnInit {
 
+  userRole = localStorage.getItem('role');
+
   constructor(public menuItems: MenuItems) { }
 
   ngOnInit(): void {
+  }
+  getAccess(role: any) {
+    if (role?.includes(this.userRole))
+      return true;
+    else
+      return false;
   }
 
 }

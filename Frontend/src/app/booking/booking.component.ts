@@ -11,9 +11,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class BookingComponent implements OnInit {
   tableData: any;
   i = 0;
-  genderCheck: boolean = true;
   bookingForm: any = FormGroup;
-  from: any; to: any;
+  from : any; to :any;
   details: any; driver: any; driverName: any; vehicle: any; fare: any;
   isLinear = true; // For Disable Confirm Booking icon
   role = localStorage.getItem('role');
@@ -22,6 +21,8 @@ export class BookingComponent implements OnInit {
   private ngxService:NgxUiLoaderService) {
 
     this.tableData = [];
+
+    this.ngxService.start();
 
     this.bookingForm = this.formBuilder.group({
       start: ['', [Validators.required]],
@@ -78,7 +79,7 @@ export class BookingComponent implements OnInit {
         console.log('response err' + err);
       },
       complete: () => {
-        console.log('completed home data');
+        this.ngxService.stop();
       }
     });
 
@@ -131,25 +132,24 @@ export class BookingComponent implements OnInit {
     if (this.tableData.length > 0)
     {
       this.ngxService.start();
-      this.service.BookData(this.tableData).subscribe({
+
+      this.service.BookData(this.tableData,new Date().getTime() +'_booking.pdf').subscribe({
         next: (data: Blob) => {
           var file = new Blob([data], { type: 'application/pdf' })
           var fileURL = URL.createObjectURL(file);
-
           this.tableData = [];
-
+          window.open(fileURL); // To open the file document
           this.ngxService.stop();
-
-          window.open(fileURL);
           var a         = document.createElement('a');
           a.href        = fileURL;
           a.target      = '_blank';
-          a.download    = new Date().getTime()+'_booking.pdf';
+          // a.download    = this.fileName; To download the document
           document.body.appendChild(a);
-          a.click();
+          // a.click(); To open the file document
         },
-        error: (res) => {
-          console.log('response ' + Object.keys(res));
+        error: (res:any) => {
+          this.ngxService.stop();
+          alert(res?.message);
         }
       });
     }

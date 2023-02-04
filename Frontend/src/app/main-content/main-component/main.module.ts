@@ -11,6 +11,7 @@ import { MyBookingComponent } from 'src/app/my-booking/my-booking.component';
 import { BookingComponent } from 'src/app/booking/booking.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { UsersComponent } from 'src/app/users/users.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
     MainComponentComponent,
     HomeComponent,
     BookingComponent,
-    MyBookingComponent
+    MyBookingComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

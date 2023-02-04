@@ -29,4 +29,5 @@ export class LoginComponent implements OnInit {
     dialogConfig.width = '550px';
     this.dialog.open(SignInComponent, dialogConfig);
   }
+
 }

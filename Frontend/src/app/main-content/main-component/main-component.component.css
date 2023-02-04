@@ -5,6 +5,8 @@
 }
 mat-toolbar{
   position: sticky;
+  display: flex;
+  justify-content: space-between;
 }
 .mat-container
 {
@@ -20,7 +22,8 @@ mat-drawer
 }
 mat-drawer-content {
   padding:0;
-  width: 100%;
+  left:20%;
+  width: 80%;
   height: 100%;
   overflow: auto;
   position: relative;
