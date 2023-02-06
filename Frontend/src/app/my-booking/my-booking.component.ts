@@ -76,7 +76,26 @@ export class MyBookingComponent implements AfterViewInit {
       this._liveAnnouncer.announce(' Sorting Cleared');
     }
   }
+  viewPdf(booking:string,url: string) {
+    try {
+      this.ngxService.startBackground('loader-02');
+      this.Service.getPdfData(url).subscribe({
+        next: (data: Blob) => {
+          var file = new Blob([data], { type: 'application/pdf' })
+          var fileURL = URL.createObjectURL(file);
+          open(fileURL);
+        },
+        error: (res: any) => {
 
+        }
+      })
+    }
+    catch (err) {
+
+    } finally {
+      this.ngxService.stopBackground('loader-02')
+    }
+  }
   getPdf(booking:string,url: string) {
     try {
       this.ngxService.startBackground('loader-02');

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponentComponent } from './main-content/main-component/main-component.component';
 import { RouteActivatorService } from './services/route-activator.service';
@@ -24,7 +25,8 @@ const routes: Routes = [
           },
       }
     ]
-  }
+  },
+  { path:'**',component:ErrorComponent},
 ];
 
 @NgModule({
