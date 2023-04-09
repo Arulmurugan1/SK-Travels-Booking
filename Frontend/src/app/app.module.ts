@@ -19,6 +19,7 @@ import { TokenInterceptor } from './services/token.interceptor';
 import { ChangePasswordComponent } from './main-content/change-password/change-password.component';
 import { ConfirmationComponent } from './main-content/confirmation/confirmation.component';
 import { ErrorComponent } from './error/error.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 
@@ -60,7 +61,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SignInComponent,
     ChangePasswordComponent,
     ConfirmationComponent,
-    ErrorComponent
+    ErrorComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

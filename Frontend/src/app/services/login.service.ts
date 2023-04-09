@@ -9,10 +9,7 @@ import { responseType,myBookingTable, UserTable } from '../Interfaces/Response';
 })
 export class LoginService {
 
-
   url = environment.baseUrl;
-
-  userId = localStorage.getItem('id');
 
   HeaderJSonType = {
     headers: new HttpHeaders({
@@ -28,60 +25,60 @@ export class LoginService {
 
   signUp(data: any) {
     localStorage.clear();
-    return this.httpClient.post(this.url + '/login/register', data, )
+    return this.httpClient.post(`${this.url}/login/register`, data )
   }
 
   signIn(data: any) {
     localStorage.clear();
-    return this.httpClient.post(this.url +'/login/', data, this.HeaderJSonType )
+    return this.httpClient.post(`${this.url}/login/`, data, this.HeaderJSonType )
   }
   checkToken() {
-    return this.httpClient.get(this.url + '/checkToken');
+    return this.httpClient.get(`${this.url}/checkToken`);
   }
   getHomeData() {
-    return this.httpClient.get(this.url + '/home',this.HeaderJSonType);
+    return this.httpClient.get(`${this.url}/home`,this.HeaderJSonType);
   }
   changePassword(data:any) {
-    return this.httpClient.post(this.url + '/login/changePassword', data, this.HeaderJSonType);
+    return this.httpClient.post(`${this.url}/login/changePassword`, data, this.HeaderJSonType);
   }
   getBoarding(): any {
-    return this.httpClient.get(this.url + '/booking/getBoarding');
+    return this.httpClient.get(`${this.url}/booking/getBoarding`);
   }
   getDestination(start: string): any{
-    return this.httpClient.get(this.url + '/booking/getDestination/'+start);
+    return this.httpClient.get(`${this.url}/booking/getDestination/${start}`);
   }
   getDetails(data:any){
-    return this.httpClient.post(this.url + '/booking/details', data, this.HeaderJSonType );
+    return this.httpClient.post(`${this.url}/booking/details`, data, this.HeaderJSonType );
   }
-  BookData(data: any,fileName:string) : Observable<Blob>{
+  BookData(data: any) : Observable<Blob>{
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', responseType: 'blob',filename:fileName
+      'Content-Type': 'application/json', responseType: 'blob'
     });
 
-    return this.httpClient.post<Blob>(this.url + '/booking/insert', data, {
+    return this.httpClient.post<Blob>(`${this.url}/booking/insert`, data, {
       headers: headers, responseType: 'blob' as 'json'
     });
   }
 
   getBookingData():any
   {
-    return this.httpClient.post<myBookingTable>(this.url + '/booking/MyBooking',this.HeaderJSonType);
+    return this.httpClient.post<myBookingTable>(`${this.url}/booking/MyBooking`,this.HeaderJSonType);
   }
   getUserData():any
   {
-    return this.httpClient.get<UserTable>(this.url + '/login/getDetails');
+    return this.httpClient.get<UserTable>(`${this.url}/login/getDetails`);
   }
   updateStatus(data : any): any
   {
-    return this.httpClient.post<responseType>(this.url + "/login/status",data,this.HeaderJSonType);
+    return this.httpClient.post<responseType>(`${this.url}/login/status`,data,this.HeaderJSonType);
   }
   getPdfData(url: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json', responseType: 'blob',filename:url
     });
 
-    return this.httpClient.post<Blob>(this.url + '/booking/getPdf',{}, {
+    return this.httpClient.post<Blob>(`${this.url}/booking/getPdf`,{}, {
       headers: headers, responseType: 'blob' as 'json'
     });
   }

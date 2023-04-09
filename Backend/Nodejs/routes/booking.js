@@ -122,8 +122,9 @@ function insertBooking(req, res) {
           customerId: customer_id,
           bookingNo: result.insertId
         });
+
         if (info.length == req.body.length) {
-          insertBookingHistory(req, res, info);
+            insertBookingHistory(req, res, info);
         }
       });
     });
@@ -136,19 +137,33 @@ function getFilePath(req) {
   else
     return modules.pdfPath + "/" + new Date().getTime() + '_booking.pdf';
 }
+
+function getTotalFare(info) {
+  let fare = 0;
+  if (info) {
+    console.log(info)
+    for (var i in info) {
+      if ( typeof parseInt(info[i].fare) != NaN ){
+        fare += parseInt(info[i].fare);   
+      }
+    }
+  }
+  return fare;
+}
+
 function insertBookingHistory(req, res, info) {
   if (info) {
 
-    const filePath = getFilePath(req);
-    info.push({ fileName: filePath });
+    const filePath = getFilePath(req) , total_fare = getTotalFare(info);
+    info.push({ fileName: filePath }); 
 
     for (var i in info) {
 
       if (info[i]['bookingNo']) {
-        var InsertBookingHistorySql = " Insert into Booking_history(s_no, booking_no, booked_by, booking_time, file_path, payment_mode) " +
-          " values (null,?,?,sysdate(),?, 'Angular App') ";
+        var InsertBookingHistorySql = " Insert into Booking_history(s_no, booking_no, booked_by, booking_time, file_path, payment_mode,total_payment,booking_payment) " +
+          " values (null,?,?,sysdate(),?, 'Angular App',?,?) ";
 
-        var filters = [info[i]['bookingNo'], req.headers['userid'], filePath];
+        var filters = [info[i]['bookingNo'], req.headers['userid'], filePath, total_fare , info[i].fare];
 
         connection.query(InsertBookingHistorySql, filters, (err, result) => {
           if (err) {
@@ -162,7 +177,7 @@ function insertBookingHistory(req, res, info) {
     }
   }
   else {
-    return res.status(500).json({ message: 'Booking Info Not Found' })
+    return res.status(500).json({ message: 'Booking Info Not Found for Pdf Generation' })
   }
 }
 function generatePdf(req, res, result) {

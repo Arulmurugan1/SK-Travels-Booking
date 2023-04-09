@@ -99,6 +99,7 @@ export class MyBookingComponent implements AfterViewInit {
   getPdf(booking:string,url: string) {
     try {
       this.ngxService.startBackground('loader-02');
+
       this.Service.getPdfData(url).subscribe({
         next: (data: Blob) => {
           var file = new Blob([data], { type: 'application/pdf' })

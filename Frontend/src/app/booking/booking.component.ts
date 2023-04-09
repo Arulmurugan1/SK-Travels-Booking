@@ -12,13 +12,13 @@ export class BookingComponent implements OnInit {
   tableData: any;
   i = 0;
   bookingForm: any = FormGroup;
-  from : any; to :any;
+  from: any; to: any;
   details: any; driver: any; driverName: any; vehicle: any; fare: any;
   isLinear = true; // For Disable Confirm Booking icon
   role = localStorage.getItem('role');
 
   constructor(private formBuilder: FormBuilder, private service: LoginService,
-  private ngxService:NgxUiLoaderService) {
+    private ngxService: NgxUiLoaderService) {
 
     this.tableData = [];
 
@@ -29,40 +29,31 @@ export class BookingComponent implements OnInit {
       end: ['', [Validators.required]],
       age: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      phone: ['', [Validators.required,Validators.maxLength(10)]],
+      phone: ['', [Validators.required, Validators.maxLength(10)]],
       date: ['', [Validators.required]],
       name: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       fare: [this.fare, []],
       driver: [this.driver, []],
-      driverName : [this.driverName, []],
+      driverName: [this.driverName, []],
       vehicle: [this.vehicle, []],
     });
   }
 
   getDetails() {
 
-    if (this.bookingForm.value['start']
-      && this.bookingForm.value['end']
-      && this.bookingForm.value['start'] != ''
-      && this.bookingForm.value['end'] != '') {
-
+    if (this.bookingForm.value.start && this.bookingForm.value.end && this.bookingForm.value.start != '' && this.bookingForm.value.end != '') {
       this.service.getDetails(this.bookingForm.value).subscribe({
         next: (res: any) => {
           if (res?.result) {
             this.vehicle = res.result.vehicle_no;
             this.driver = res.result.driver_id;
-            this.driverName=res.result.driver_name;
+            this.driverName = res.result.driver_name;
             this.fare = res.result.fare;
-
           }
-          return res;
         },
         error: (err: any) => {
           return err?.message;
-        },
-        complete: () => {
-          console.log(this.bookingForm.value);
         }
       });
     }
@@ -88,8 +79,7 @@ export class BookingComponent implements OnInit {
   }
 
   getDestination() {
-    if (this.bookingForm.value['start'] != '')
-    {
+    if (this.bookingForm.value['start'] != '') {
       this.to = this.service.getDestination(this.bookingForm.value['start']).subscribe({
         next: (response: any) => {
           this.to = response?.results;
@@ -106,12 +96,12 @@ export class BookingComponent implements OnInit {
 
   add() {
     var data = this.bookingForm.value;
-    data['date']        = data['date'].toLocaleDateString();
-    data['fare']        = this.fare;
-    data['driver']      = this.driver;
-    data['driverName']  = this.driverName;
-    data['vehicle']     = this.vehicle;
-    data['id']          = localStorage.getItem('userId');
+    data['date'] = data['date'].toLocaleDateString();
+    data['fare'] = this.fare;
+    data['driver'] = this.driver;
+    data['driverName'] = this.driverName;
+    data['vehicle'] = this.vehicle;
+    data['id'] = localStorage.getItem('userId');
 
     this.tableData.push(data);
     this.i++;
@@ -129,25 +119,25 @@ export class BookingComponent implements OnInit {
 
   BookData() {
 
-    if (this.tableData.length > 0)
-    {
+    if (this.tableData.length > 0) {
       this.ngxService.start();
 
-      this.service.BookData(this.tableData,new Date().getTime() +'_booking.pdf').subscribe({
+      this.service.BookData(this.tableData).subscribe({
         next: (data: Blob) => {
           var file = new Blob([data], { type: 'application/pdf' })
           var fileURL = URL.createObjectURL(file);
           this.tableData = [];
           window.open(fileURL); // To open the file document
           this.ngxService.stop();
-          var a         = document.createElement('a');
-          a.href        = fileURL;
-          a.target      = '_blank';
+
+          //var a         = document.createElement('a');
+          //a.href        = fileURL;
+          //a.target      = '_blank';
           // a.download    = this.fileName; To download the document
-          document.body.appendChild(a);
+          //document.body.appendChild(a);
           // a.click(); To open the file document
         },
-        error: (res:any) => {
+        error: (res: any) => {
           this.ngxService.stop();
           alert(res?.message);
         }
